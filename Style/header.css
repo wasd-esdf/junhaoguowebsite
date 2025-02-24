@@ -43,6 +43,14 @@ header{
   animation: bounce 2s infinite ease-in-out;
 }
 
+.diamond-inside{
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 8px;
+  height: 8px;
+  background-color: rgb(255, 255, 255);
+
 @keyframes bounce {
   0% {
       transform: translateY(-20px) rotate(90deg);
