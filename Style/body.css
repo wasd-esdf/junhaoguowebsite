@@ -6,7 +6,7 @@
 }
 
 .preview-container {
-  width: 50%;
+  width: 75%; /*50%*/
   padding: 10px 10px;
   text-decoration: none;
   color: #000000;
