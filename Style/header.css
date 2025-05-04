@@ -12,16 +12,53 @@ header{
 .header-left{
   background-color: rgb(255, 255, 255);
   flex: 1;
-  
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 
-.scienter{
+.header-left-text{
+  position: absolute;
+  top: 80px;
+  left: 96px;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 40pt;
+  font-size: 12pt;
   font-weight: 600;
-  position: relative;
+  text-decoration:none;
   color: black;
-  
+}
+
+.header-left-text-2{
+  position: absolute;
+  top: 300px;
+  left: 35px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12pt;
+  font-weight: 600;
+  text-decoration:none;
+  color: black;
+}
+
+.header-logo{
+  height: 80px;
+  margin-left: 10px;
+
+}
+
+.header-logo-container{
+  display: flex;
+  align-items: center;
+}
+
+.junhaoguo{
+  display: inline-block;
+  align-items: center;
+  margin-left: 10px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16pt;
+  font-weight: 600;
+  text-decoration:none;
+  color: black;
 }
 
 .name{
@@ -79,7 +116,7 @@ header{
 .header-info{ 
   
   font-family: 'Courier New', Courier, monospace;
-  font-size: 16pt;
+  font-size: 12pt;
   font-weight: 600;
   text-decoration:none;
   color: black;
