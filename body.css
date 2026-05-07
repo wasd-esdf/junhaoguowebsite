@@ -1,0 +1,453 @@
+/* ============================================================
+   FONTS
+   ============================================================ */
+@font-face {
+  font-family: 'Geist';
+  src: url('../fonts/Geist-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap; /* 避免 FOIT：字体未加载时先显示系统字体 */
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: url('../fonts/Geist-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: url('../fonts/Geist-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: url('../fonts/Geist-BlackItalic.woff2') format('woff2');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: url('../fonts/Geist-Thin.woff2') format('woff2');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Taipei';
+  src: url('../fonts/TaipeiSansTCBeta-Regular.ttf') format('truetype'); /* 修正：ttf → truetype */
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* ============================================================
+   CSS VARIABLES & RESET
+   ============================================================ */
+:root {
+  --black: #ffffff; /* 变量命名与颜色值相反，保留原始意图不动 */
+  --white: #000000;
+  --font-size: 11px;
+  --nav-width: 35%;
+  --header-height: 40px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* 统一盒模型，避免尺寸计算偏差 */
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  background: #000;
+  font-family: 'Geist', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 100;
+  color: #fff;
+}
+
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.interface {
+  display: flex;
+  padding-top: var(--header-height); /* 防止内容被固定 header 遮住 */
+}
+
+.scroll-pane {
+  width: calc(100% - var(--nav-width)); /* 与右侧固定栏宽度互补 */
+}
+
+
+/* ============================================================
+   IMAGE SLOTS
+   ============================================================ */
+.img-slot {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  border-bottom: 1px solid #eee;
+}
+
+.img-slot img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  display: block;
+}
+
+
+/* ============================================================
+   GIF BANNER (#p9)
+   4 张 GIF 镜像排列：原始 / 水平翻转 / 垂直翻转 / 180°旋转
+   ============================================================ */
+#p9 {
+  display: block !important;
+  width: 100% !important;
+  height: 100vh !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: 0 !important;
+  font-size: 0 !important;
+  overflow: hidden !important;
+  background: none !important;
+}
+
+#p9 img {
+  display: inline-block !important;
+  vertical-align: top !important;
+  width: calc(50% + 1px) !important;  /* +1px 消除子像素缝隙 */
+  height: calc(50% + 1px) !important;
+  margin-right: -1px !important;
+  margin-bottom: -1px !important;
+  object-fit: cover !important;
+  border: none !important;
+  padding: 0 !important;
+  transition: none !important;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+#p9 img:nth-child(2) { transform: scaleX(-1); }
+#p9 img:nth-child(3) { transform: scaleY(-1); }
+#p9 img:nth-child(4) { transform: rotate(180deg); }
+
+
+/* ============================================================
+   HEADER / BANNER
+   ============================================================ */
+.banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height);
+  background-color: var(--white);
+  border-bottom: 1px solid var(--black);
+  z-index: 1000;
+  text-transform: uppercase;
+  font-family: 'Helvetica', Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.banner-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 0 20px;
+}
+
+.link,
+.status {
+  font-size: var(--font-size);
+  color: var(--black);
+  text-decoration: none;
+  padding: 12px 10px;
+  display: inline-block;
+}
+
+.link {
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.link:hover,
+.link:focus-visible {
+  background-color: var(--black);
+  color: var(--white);
+  outline: none;
+}
+
+.banner-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status {
+  opacity: 0.4;
+  cursor: default;
+}
+
+
+/* ============================================================
+   FIXED SIDE NAV — ACRNM style
+   ============================================================ */
+.fixed-ui {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: var(--nav-width);
+  height: 100vh;
+  background: #000;
+  border-left: none;
+  z-index: 100;
+  padding: calc(var(--header-height) + 24px) 32px 40px;
+  overflow: hidden;
+}
+
+/* 两列并排，各自独立，左对齐，顶部对齐 */
+.ui-columns {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 40px;
+  height: 100%;
+}
+
+.ui-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* 每个条目：无背景、无边框、纯文字、左对齐 */
+.ui-item {
+  appearance: none;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);  /* 默认偏暗 */
+  font-family: inherit;
+  font-size: var(--font-size);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-align: left;
+  padding: 2px 0;
+  margin: 0;
+  line-height: 1.9;
+  cursor: pointer;
+  width: auto;
+  transition: color 0.1s;
+  white-space: nowrap;
+}
+
+.ui-item:hover,
+.ui-item:focus-visible {
+  color: #fff;
+  background: transparent;
+  outline: none;
+}
+
+
+
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 200px;
+  width: calc(100% - var(--nav-width)); /* 与 scroll-pane 宽度对齐 */
+  padding: 50px 50px 0;
+  margin: 0;
+}
+
+.footer-container {
+  display: block;
+  font-size: 12px;
+  color: #f0f8ff;
+  line-height: 1.8;
+}
+
+
+/* ============================================================
+   MOBILE NAV（仅移动端使用的底部导航栏）
+   ============================================================ */
+.mobile-nav {
+  display: none; /* 桌面默认隐藏 */
+}
+
+
+/* ============================================================
+   RESPONSIVE — TABLET (≤ 1024px)
+   ============================================================ */
+@media (max-width: 1024px) {
+  :root {
+    --nav-width: 40%;
+  }
+
+  .fixed-ui {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+
+/* ============================================================
+   RESPONSIVE — MOBILE (≤ 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+
+  /* 隐藏桌面侧边栏 */
+  .fixed-ui {
+    display: none;
+  }
+
+  /* 滚动区占满全屏 */
+  .scroll-pane {
+    width: 100%;
+  }
+
+  /* 图片槽自然堆叠，不强制 100vh */
+  .img-slot {
+    width: 100%;
+    height: auto;
+    min-height: 50vw;
+    padding: 10px 0;
+    border-bottom: 1px solid #222;
+  }
+
+  .img-slot img {
+    width: 100%;
+    max-width: 100%;
+    max-height: none;
+    height: auto;
+    display: block;
+  }
+
+  /* GIF banner 在移动端保持 2×2 网格 */
+  #p9 {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1;
+  }
+
+  #p9 img {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* footer 适配 */
+  footer {
+    width: 100%;
+    padding: 30px 20px 0;
+    height: auto;
+    min-height: 100px;
+    margin-bottom: 60px; /* 避免被底部导航遮住 */
+  }
+
+  .footer-container {
+    font-size: 10px;
+  }
+
+  /* interface 布局调整 */
+  .interface {
+    flex-direction: column;
+    padding-bottom: 56px; /* 为底部导航留出空间 */
+  }
+
+  /* ── 移动端底部导航 ── */
+  .mobile-nav {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #000;
+    border-top: 1px solid #333;
+    z-index: 200;
+  }
+
+  .mobile-nav__toggle {
+    appearance: none;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: inherit;
+    font-size: var(--font-size);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    width: 100%;
+    height: 44px;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .mobile-nav__toggle:active {
+    background: #111;
+  }
+
+  .mobile-nav__arrow {
+    transition: transform 0.2s ease;
+    display: inline-block;
+  }
+
+  /* 展开时箭头翻转 */
+  .mobile-nav__toggle[aria-expanded="true"] .mobile-nav__arrow {
+    transform: rotate(180deg);
+  }
+
+  .mobile-nav__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    padding: 8px 16px 16px;
+    background: #000;
+    border-top: 1px solid #222;
+    max-height: 40vh;
+    overflow-y: auto;
+  }
+
+  .mobile-nav__list[hidden] {
+    display: none;
+  }
+
+  .mobile-nav__list .ui-item {
+    margin: 6px 8px;
+  }
+}
+
+
+/* ============================================================
+   RESPONSIVE — SMALL MOBILE (≤ 430px)
+   ============================================================ */
+@media (max-width: 430px) {
+  .img-slot {
+    min-height: 60vw;
+  }
+}
